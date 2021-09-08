@@ -35,6 +35,7 @@ using namespace UnityEngine;
 using namespace ExitGames::Client::Photon;
 using namespace Photon::Realtime;
 using namespace Photon::Pun;
+//ik i dont need to include so much and use that many namespaces bug mehh
 
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
