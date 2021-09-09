@@ -4,7 +4,7 @@
     "name": "Screw Gravity",
     "id": "screwgravity",
     "author": "fchb1239",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "packageId": "com.AnotherAxiom.GorillaTag",
     "packageVersion": "1.0.11",
     "description": "What's gravity even for?",
@@ -14,5 +14,17 @@
     ],
     "libraryFiles": [
         "libbeatsaber-hook_2_3_0.so"
-    ]
+    ],
+     "dependencies": [
+        {
+            "id": "monkecodegen",
+            "version": ">=0.8.0",
+            "downloadIfMissing": "https://github.com/RedBrumbler/MonkeCodegen/releases/download/v0.8.0/MonkeCodegen.qmod"
+        },
+        {
+            "id": "MonkeComputer",
+            "version": ">=1.6.1",
+            "downloadIfMissing": "https://github.com/RedBrumbler/MonkeComputer/releases/download/v1.6.1/MonkeComputer.qmod"
+        }
+    ],
 }
