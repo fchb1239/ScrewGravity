@@ -26,5 +26,5 @@
             "version": ">=1.6.1",
             "downloadIfMissing": "https://github.com/RedBrumbler/MonkeComputer/releases/download/v1.6.1/MonkeComputer.qmod"
         }
-    ],
+    ]
 }
