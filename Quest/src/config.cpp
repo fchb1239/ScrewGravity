@@ -25,6 +25,8 @@ void SaveConfig() {
 
     getConfig().config.AddMember("enabled", config.enabled, allocator);
     getConfig().config.AddMember("gravitySetting", config.gravitySetting, allocator);
+    getConfig().config.AddMember("frozen", config.frozen, allocator);
+    getConfig().config.AddMember("upSpeed", config.upSpeed, allocator);
     getConfig().Write();
     INFO("Saved Configuration!");
 }
@@ -45,6 +47,11 @@ bool LoadConfig() {
     }
     if(doc.HasMember("frozen") && doc["frozen"].IsBool()) {
         config.frozen = doc["frozen"].GetBool();
+    } else {
+        foundEverything = false;
+    }
+    if(doc.HasMember("upSpeed") && doc["upSpeed"].GetInt()) {
+        config.upSpeed = doc["upSpeed"].GetInt();
     } else {
         foundEverything = false;
     }

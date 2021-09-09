@@ -40,7 +40,31 @@ using namespace Photon::Pun;
 static ModInfo modInfo; // Stores the ID and version of our mod, and is sent to the modloader upon startup
 
 bool trigger;
+bool once; //someont told me about smth with getting when the player joined with a patching thingy but i forgot, ill just be keeping this here until i figure it out lol
+float upAmount = 10;
 
+void SetSpeed() {
+    if(config.upSpeed  == 0) {
+        upAmount = 10;
+    }
+    if(config.upSpeed  == 1) {
+        upAmount = 50;
+    }
+    if(config.upSpeed  == 2) {
+        upAmount = 100;
+    }
+    if(config.upSpeed  == 3) {
+        upAmount = 200;
+    }
+    if(config.upSpeed == 4) {
+        upAmount = 1000;
+    }
+    if(config.upSpeed == 5) {
+        upAmount = 10000;
+    }
+}
+
+//haunted is reading this code rn, and just dying inside lmao
 MAKE_HOOK_MATCH(Player_Update, &GorillaLocomotion::Player::Update, void, GorillaLocomotion::Player* self) {
     //getLogger().info("Debugging");
     Player_Update(self);
@@ -51,32 +75,29 @@ MAKE_HOOK_MATCH(Player_Update, &GorillaLocomotion::Player::Update, void, Gorilla
     else {
         config.isRoom = true;
     }
-    if(config.isRoom) {
-        if(config.enabled) {
-            trigger = OVRInput::Get(OVRInput::Button::One, OVRInput::Controller::RTouch);
-            if(trigger) {
-                if(!config.gravitySetting) {
-                    GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_useGravity(false);
-                    GorillaLocomotion::Player::get_Instance()->playerRigidBody->AddForce(50 * UnityEngine::Vector3::get_up());
-                }
-                else {
-                    GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_useGravity(false);
-                }
-            }
-            else if(config.frozen) {
-                GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_useGravity(true);
-            }
-            if(!config.frozen) {
+    if(config.isRoom && config.enabled) {
+        trigger = OVRInput::Get(OVRInput::Button::One, OVRInput::Controller::RTouch);
+        if(trigger) {
+            if(!config.gravitySetting) {
                 GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_useGravity(false);
-                GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_velocity(Vector3::get_zero());
+                GorillaLocomotion::Player::get_Instance()->playerRigidBody->AddForce(upAmount * UnityEngine::Vector3::get_up());
+            }
+            else {
+                GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_useGravity(false);
             }
         }
-        else {
+        else if(config.frozen) {
             GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_useGravity(true);
         }
+        if(!config.frozen) {
+            GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_useGravity(false);
+            GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_velocity(Vector3::get_zero());
+        }
+        once = false;
     }
-    else {
+    else if(!once) {
         GorillaLocomotion::Player::get_Instance()->playerRigidBody->set_useGravity(true);
+        once = true;
     }
 }
 

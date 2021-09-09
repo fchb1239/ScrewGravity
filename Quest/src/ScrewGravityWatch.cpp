@@ -14,12 +14,19 @@ using namespace Photon::Pun;
 
 bool isRoom;
 
+extern void SetSpeed();
+
 namespace ScrewGravity
 {
     void ScrewGravityWatchView::Awake()
     {
         settingSelector = new UISelectionHandler(EKeyboardKey::Up, EKeyboardKey::Down, EKeyboardKey::Enter, true, false);
-        settingSelector->max = 3;
+        settingSelector->max = 4;
+        upSelect = new UISelectionHandler(EKeyboardKey::Left, EKeyboardKey::Right, EKeyboardKey::Enter, false, true);
+        upSelect->max = 6;
+        upSelect->currentSelectionIndex = config.upSpeed;
+
+        SetSpeed();
     }
 
     void ScrewGravityWatchView::DidActivate(bool firstActivation)
@@ -36,12 +43,12 @@ namespace ScrewGravity
             config.enabled ^= 1;
             SaveConfig();
         }
-        else if (settingSelector->currentSelectionIndex == 1) 
+        if (settingSelector->currentSelectionIndex == 1) 
         {
             config.gravitySetting ^= 1;
             SaveConfig();
         }
-        else if (settingSelector->currentSelectionIndex == 2) 
+        if (settingSelector->currentSelectionIndex == 2) 
         {
             config.frozen ^= 1;
             SaveConfig();
@@ -72,11 +79,66 @@ namespace ScrewGravity
         text += config.enabled ? "<size=60><color=#00ff00> Enabled</color></size>" : "<size=60><color=#ff0000> Disabled</color></size>"; 
         text += "<size=60>\n\n</size>";
         text += settingSelector->currentSelectionIndex == 1 ? "<size=60><color=#FF5115>></color></size>" : "<size=60> </size>";
-        text += config.gravitySetting ? "<size=60><color=#004797> Zero</color></size>" : "<size=60><color=#EEECCA> Reverse</color></size>"; 
+        text += config.gravitySetting ? "<size=60><color=#004797> Zero</color></size>" : "<size=60><color=#EEECCA> Custom</color></size>"; 
         text += "<size=60>\n\n</size>";
         text += settingSelector->currentSelectionIndex == 2 ? "<size=60><color=#FF5115>></color></size>" : "<size=60> </size>";
         text += config.frozen ? "<size=60><color=#004797> Unfrozen</color></size>" : "<size=60><color=#EEECCA> Frozen</color></size>"; 
         text += "<size=60>\n\n</size>";
+        text += "<color=#ffff00>========================</color>\n";
+        text += "<b><color=#004797>Custom </color></b><color=#EEECCA>Gravity <b><color=#004797>Settings:</color></b></color>\n";
+        text += "<color=#ffff00>========================</color>\n";
+        text += settingSelector->currentSelectionIndex == 3 ? "<size=60><color=#FF5115>></color></size>" : "<size=60> </size>";
+        text += "<size=60><color=#004797> Gravity: </color></size>";
+        //haunted's eyes are burning rn xDDDDD
+        switch (upSelect->currentSelectionIndex) {
+            case 0:
+                if(!config.gravitySetting) {
+                    text += "<size=60><color=#EEECCA>10</color></size>";
+                } else {
+                    text += "<size=60><color=#ff0000>10</color></size>";
+                }
+                break;
+            case 1:
+                if(!config.gravitySetting) {
+                    text += "<size=60><color=#EEECCA>50</color></size>";
+                } else {
+                    text += "<size=60><color=#ff0000>50</color></size>";
+                }
+                break;
+            case 2:
+                if(!config.gravitySetting) {
+                    text += "<size=60><color=#EEECCA>100</color></size>";
+                } else {
+                    text += "<size=60><color=#ff0000>100</color></size>";
+                }
+                break;
+            case 3:
+                if(!config.gravitySetting) {
+                    text += "<size=60><color=#EEECCA>200</color></size>";
+                } else {
+                    text += "<size=60><color=#ff0000>200</color></size>";
+                }
+                break;
+            case 4:
+                if(!config.gravitySetting) {
+                    text += "<size=60><color=#EEECCA>1000</color></size>";
+                } else {
+                    text += "<size=60><color=#ff0000>1000</color></size>";
+                }
+                break;
+            case 5:
+                if(!config.gravitySetting) {
+                    text += "<size=60><color=#EEECCA>10000</color></size>";
+                } else {
+                    text += "<size=60><color=#ff0000>10000</color></size>";
+                }
+                break;
+            default:
+                break;    
+            } 
+
+        text += "<size=60>\n\n</size>";
+        
         /*
         if (config.enabled && config.isRoom)
         {
@@ -94,9 +156,20 @@ namespace ScrewGravity
             {
                 case 0:
                     break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    upSelect->HandleKey(key);  
+                    break;
+                case 4:      
+                    break;
                 default:
                     break;
             }
+            config.upSpeed = upSelect->currentSelectionIndex;
+            SetSpeed();
             SaveConfig();
         }
         Redraw();

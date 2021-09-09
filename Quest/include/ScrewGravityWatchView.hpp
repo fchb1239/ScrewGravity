@@ -16,4 +16,5 @@ DECLARE_CLASS_CUSTOM(ScrewGravity, ScrewGravityWatchView, GorillaUI::Components:
     public:
         GorillaUI::UISelectionHandler* settingSelector = nullptr;
         GorillaUI::UIToggleInputHandler* toggleHandler = nullptr;
+        GorillaUI::UISelectionHandler* upSelect = nullptr;
 )
