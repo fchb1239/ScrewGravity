@@ -82,7 +82,7 @@ LOCAL_SHARED_LIBRARIES += quest-cosmetic-loader_0_2_2
 LOCAL_SHARED_LIBRARIES += zip
 LOCAL_SHARED_LIBRARIES += gorilla-utils
 LOCAL_LDLIBS += -llog
-LOCAL_CFLAGS += -I'extern/libil2cpp/il2cpp/libil2cpp' -DID='"screwgravity"' -DVERSION='"0.6.9"' -I'./shared' -I'./extern' -isystem'extern/monkecodegen/include'
+LOCAL_CFLAGS += -I'extern/libil2cpp/il2cpp/libil2cpp' -DID='"screwgravity"' -DVERSION='"1.0.1"' -I'./shared' -I'./extern' -isystem'extern/monkecodegen/include'
 LOCAL_CPPFLAGS += -std=c++2a
 LOCAL_C_INCLUDES += ./include ./src
 include $(BUILD_SHARED_LIBRARY)
