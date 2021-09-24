@@ -1,5 +1,5 @@
 # Screw Gravity
-Screw Gravity is a mod for Gorilla Tag that lets you change gravity settings via the [monke watch](https://github.com/RedBrumbler/MonkeComputer).
+Screw Gravity is a mod for Gorilla Tag that lets you change gravity settings via the [Monke Watch](https://github.com/RedBrumbler/MonkeComputer).
 
 ![](GitHub/screwgrav_example_gif_v2_comrpessed.gif)
 
